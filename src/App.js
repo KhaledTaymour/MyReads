@@ -5,6 +5,7 @@ import "./App.css";
 //Components
 import SearchPage from "./components/searchPage/SearchPage";
 import BookList from "./components/bookList/BookList";
+import FourOhFour from "./components/fourOhFour/FourOhFour";
 
 //API
 import * as BooksAPI from "./BooksAPI";
@@ -114,6 +115,9 @@ class BooksApp extends React.Component {
                 );
               }}
             />
+            <Route path="*">
+              <FourOhFour />
+            </Route>
           </Switch>
         </div>
       </BrowserRouter>
