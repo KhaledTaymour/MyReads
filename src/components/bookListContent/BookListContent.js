@@ -17,7 +17,7 @@ const BookListContent = ({
           <div className="bookshelf-books">
             <ol className="books-grid">
               {book_records_currently.map((bk, index) => (
-                <li key={`currently-${index}`}>
+                <li key={`currently-${bk?.id}`}>
                   <Book
                     shelf={SHELF.CURRENTLY}
                     handleShelfUpdate={(newShelf) => {
@@ -36,8 +36,8 @@ const BookListContent = ({
           <h2 className="bookshelf-title">Want to Read</h2>
           <div className="bookshelf-books">
             <ol className="books-grid">
-              {book_records_want.map((bk, index) => (
-                <li key={`want-${index}`}>
+              {book_records_want.map((bk) => (
+                <li key={`want-${bk?.id}`}>
                   <Book
                     shelf={SHELF.WANT}
                     handleShelfUpdate={(newShelf) => {
@@ -57,7 +57,7 @@ const BookListContent = ({
           <div className="bookshelf-books">
             <ol className="books-grid">
               {book_records_read.map((bk, index) => (
-                <li key={`read-${index}`}>
+                <li key={`read-${bk?.id}`}>
                   <Book
                     shelf={SHELF.READ}
                     handleShelfUpdate={(newShelf) => {
