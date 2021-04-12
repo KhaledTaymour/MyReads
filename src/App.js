@@ -62,10 +62,11 @@ class BooksApp extends React.Component {
 
   handleSearch = async (query) => {
     const searchResults = await BooksAPI.search(query);
-    // console.log({ searchResults });
-    if (searchResults) {
+    if (searchResults && Array.isArray(searchResults)) {
       this.setState(() => ({ book_records_searched: searchResults }));
-      debugger;
+    } else {
+      // in case of undefined (empty text) or no results
+      this.setState(() => ({ book_records_searched: [] }));
     }
   };
 
@@ -95,7 +96,6 @@ class BooksApp extends React.Component {
               render={() => {
                 return (
                   <BookList
-                    // filterShelfBooks={this.filterShelfBooks}
                     handleShelfUpdate={this.handleShelfUpdate}
                     book_records_currently={this.state.book_records_currently}
                     book_records_want={this.state.book_records_want}
@@ -111,8 +111,10 @@ class BooksApp extends React.Component {
                   <SearchPage
                     handleSearch={this.handleSearch}
                     searchedBooks={this.state.book_records_searched}
-                    // books={this.state.book_records}
-                    // handleShelfUpdate={this.handleShelfUpdate}
+                    handleShelfUpdate={this.handleShelfUpdate}
+                    book_records_currently={this.state.book_records_currently}
+                    book_records_want={this.state.book_records_want}
+                    book_records_read={this.state.book_records_read}
                   />
                 );
               }}

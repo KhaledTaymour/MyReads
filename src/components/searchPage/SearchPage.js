@@ -4,19 +4,64 @@ import Book from "../bookListContent/book/Book";
 //enums
 import { SHELF } from "../../constants/enums";
 
-const SearchPage = ({ searchedBooks, handleSearch }) => {
+/**
+ *
+ * @param {Object} props
+ * @param {Array} searchedBooks Array of books coming from search
+ * @param {Functiom} handleSearch handles the searching
+ * @param {Functiom} handleShelfUpdate handles the Change of Shelf for a book
+ * @param {Array} book_records_currently Array of currently reading books (STATE)
+ * @param {Array} book_records_want Array of want to read books (STATE)
+ * @param {Array} book_records_read Array of read books (STATE)
+ */
+const SearchPage = ({
+  searchedBooks,
+  handleSearch,
+  handleShelfUpdate,
+  book_records_currently,
+  book_records_want,
+  book_records_read,
+}) => {
   const handleChangingSearchText = (searchedText) => {
     handleSearch(searchedText);
   };
 
-  if (searchedBooks) {
-    console.log({ searchedBooks });
-  }
+  /**
+   * takes book id & check if it is already in our library
+   * @param {String} bookId
+   * @returns book shelf
+   */
+  const checkBookShelf = (bookId) => {
+    const curr = book_records_currently.find((rec) => {
+      return rec.id === bookId;
+    });
+    if (curr) return SHELF.CURRENTLY;
+
+    const want = book_records_want.find((rec) => {
+      return rec.id === bookId;
+    });
+    if (want) return SHELF.WANT;
+
+    const read = book_records_read.find((rec) => {
+      return rec.id === bookId;
+    });
+    if (read) return SHELF.READ;
+
+    //else return nothing
+  };
+
   return (
     <div className="search-books">
       <div className="search-books-bar">
         <Link to="/">
-          <button className="close-search">Close</button>
+          <button
+            className="close-search"
+            onClick={() => {
+              handleChangingSearchText(" ");
+            }}
+          >
+            Close
+          </button>
         </Link>
 
         <div className="search-books-input-wrapper">
@@ -31,7 +76,6 @@ const SearchPage = ({ searchedBooks, handleSearch }) => {
           <input
             type="text"
             placeholder="Search by title or author"
-            // value={}
             onChange={(e) => {
               const searchedText = e.target.value;
               handleChangingSearchText(searchedText);
@@ -45,10 +89,10 @@ const SearchPage = ({ searchedBooks, handleSearch }) => {
             searchedBooks.map((bk) => (
               <li key={`currently-${bk?.id}`}>
                 <Book
-                  shelf={SHELF.CURRENTLY}
-                  // handleShelfUpdate={(newShelf) => {
-                  //   handleShelfUpdate(bk, newShelf);
-                  // }}
+                  shelf={checkBookShelf(bk?.id)}
+                  handleShelfUpdate={(newShelf) => {
+                    handleShelfUpdate(bk, newShelf);
+                  }}
                   backgroundImage={bk?.imageLinks?.thumbnail}
                   title={bk?.title}
                   authors={bk?.authors?.join()}
