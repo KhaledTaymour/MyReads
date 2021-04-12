@@ -1,6 +1,10 @@
 import React from "react";
 
-function Book({backgroundImage, title, authors}) {
+function Book({ shelf, handleShelfUpdate, backgroundImage, title, authors }) {
+  const handleSelectOnChange = (newShelf) => {
+    handleShelfUpdate(newShelf);
+  };
+
   return (
     <div className="book">
       <div className="book-top">
@@ -9,12 +13,17 @@ function Book({backgroundImage, title, authors}) {
           style={{
             width: 128,
             height: 193,
-            backgroundImage:
-            `url(${backgroundImage})`,
+            backgroundImage: `url(${backgroundImage})`,
           }}
         />
         <div className="book-shelf-changer">
-          <select>
+          <select
+            value={shelf ? shelf : "none"}
+            onChange={(e) => {
+              const newShelf = e.target.value;
+              handleSelectOnChange(newShelf);
+            }}
+          >
             <option value="move" disabled>
               Move to...
             </option>
