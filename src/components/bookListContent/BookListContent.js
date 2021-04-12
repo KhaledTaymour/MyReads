@@ -3,6 +3,14 @@ import Book from "./book/Book";
 //enums
 import { SHELF } from "../../constants/enums";
 
+/**
+ * Book List Content Component
+ * @param {Object} props
+ * @param {Functiom} handleShelfUpdate handles the Change of Shelf for a book
+ * @param {Array} book_records_currently Array of currently reading books (STATE)
+ * @param {Array} book_records_want Array of want to read books (STATE)
+ * @param {Array} book_records_read Array of read books (STATE)
+ */
 const BookListContent = ({
   handleShelfUpdate,
   book_records_currently,

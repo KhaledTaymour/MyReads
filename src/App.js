@@ -69,16 +69,11 @@ class BooksApp extends React.Component {
       this.setState(() => ({ book_records_searched: [] }));
     }
   };
-
-  // filterShelfBooks = (shelf) => {
-  //   // return this.state.book_records.filter((book) => book.shelf === shelf);
-  // };
   //#endregion
 
   //#region Lifecycle Methods
   componentDidMount() {
     BooksAPI.getAll().then((results) => {
-      console.log({ results });
       this.setBookRecords(results);
     });
   }
