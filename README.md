@@ -46,6 +46,8 @@ Check https://review.udacity.com/#!/rubrics/918/view to be more focused on what 
         |   └── BookListContent.js
         |   └── book
         |       └── Book.js
+        |── fourOhFour
+        |   └── FourOhFour.js
         │── searchPage
         |   └── SearchPage.js
         └── constants
