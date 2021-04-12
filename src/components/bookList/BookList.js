@@ -2,6 +2,14 @@ import React from "react";
 import BookListContent from "../bookListContent/BookListContent";
 import { Link } from "react-router-dom";
 
+/**
+ * Book List Component
+ * @param {Object} props
+ * @param {Functiom} handleShelfUpdate handles the Change of Shelf for a book
+ * @param {Array} book_records_currently Array of currently reading books (STATE)
+ * @param {Array} book_records_want Array of want to read books (STATE)
+ * @param {Array} book_records_read Array of read books (STATE)
+ */
 const BookList = ({
   handleShelfUpdate,
   book_records_currently,

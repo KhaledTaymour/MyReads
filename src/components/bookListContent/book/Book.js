@@ -1,5 +1,14 @@
 import React from "react";
 
+/**
+ * Book Component
+ * @param {Object} props
+ * @param {String} shelf shelf
+ * @param {Functiom} handleShelfUpdate handles the Change of Shelf for a book
+ * @param {String} backgroundImage book thumbnail image
+ * @param {String} title book title
+ * @param {Array} authors Array of book authors
+ */
 function Book({ shelf, handleShelfUpdate, backgroundImage, title, authors }) {
   const handleSelectOnChange = (newShelf) => {
     handleShelfUpdate(newShelf);
