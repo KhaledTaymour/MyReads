@@ -1,7 +1,17 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Book from "../bookListContent/book/Book";
+//enums
+import { SHELF } from "../../constants/enums";
 
-const SearchPage = () => {
+const SearchPage = ({ searchedBooks, handleSearch }) => {
+  const handleChangingSearchText = (searchedText) => {
+    handleSearch(searchedText);
+  };
+
+  if (searchedBooks) {
+    console.log({ searchedBooks });
+  }
   return (
     <div className="search-books">
       <div className="search-books-bar">
@@ -18,11 +28,34 @@ const SearchPage = () => {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-          <input type="text" placeholder="Search by title or author" />
+          <input
+            type="text"
+            placeholder="Search by title or author"
+            // value={}
+            onChange={(e) => {
+              const searchedText = e.target.value;
+              handleChangingSearchText(searchedText);
+            }}
+          />
         </div>
       </div>
       <div className="search-books-results">
-        <ol className="books-grid" />
+        <ol className="books-grid">
+          {searchedBooks?.length > 0 &&
+            searchedBooks.map((bk) => (
+              <li key={`currently-${bk?.id}`}>
+                <Book
+                  shelf={SHELF.CURRENTLY}
+                  // handleShelfUpdate={(newShelf) => {
+                  //   handleShelfUpdate(bk, newShelf);
+                  // }}
+                  backgroundImage={bk?.imageLinks?.thumbnail}
+                  title={bk?.title}
+                  authors={bk?.authors?.join()}
+                />
+              </li>
+            ))}
+        </ol>
       </div>
     </div>
   );

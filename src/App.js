@@ -15,10 +15,10 @@ import { SHELF } from "./constants/enums";
 class BooksApp extends React.Component {
   //#region state
   state = {
-    book_records: [],
     book_records_currently: [],
     book_records_want: [],
     book_records_read: [],
+    book_records_searched: [],
   };
   //#endregion
 
@@ -60,9 +60,18 @@ class BooksApp extends React.Component {
     }
   };
 
-  filterShelfBooks = (shelf) => {
-    return this.state.book_records.filter((book) => book.shelf === shelf);
+  handleSearch = async (query) => {
+    const searchResults = await BooksAPI.search(query);
+    // console.log({ searchResults });
+    if (searchResults) {
+      this.setState(() => ({ book_records_searched: searchResults }));
+      debugger;
+    }
   };
+
+  // filterShelfBooks = (shelf) => {
+  //   // return this.state.book_records.filter((book) => book.shelf === shelf);
+  // };
   //#endregion
 
   //#region Lifecycle Methods
@@ -100,8 +109,10 @@ class BooksApp extends React.Component {
               render={() => {
                 return (
                   <SearchPage
-                  // books={this.state.book_records}
-                  // handleShelfUpdate={this.handleShelfUpdate}
+                    handleSearch={this.handleSearch}
+                    searchedBooks={this.state.book_records_searched}
+                    // books={this.state.book_records}
+                    // handleShelfUpdate={this.handleShelfUpdate}
                   />
                 );
               }}
