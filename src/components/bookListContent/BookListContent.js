@@ -1,7 +1,10 @@
 import React from "react";
 import Book from "./book/Book";
+//enums
+import { SHELF } from "../../constants/enums";
 
 const BookListContent = ({
+  handleShelfUpdate,
   book_records_currently,
   book_records_want,
   book_records_read,
@@ -16,6 +19,10 @@ const BookListContent = ({
               {book_records_currently.map((bk, index) => (
                 <li key={`currently-${index}`}>
                   <Book
+                    shelf={SHELF.CURRENTLY}
+                    handleShelfUpdate={(newShelf) => {
+                      handleShelfUpdate(bk, newShelf);
+                    }}
                     backgroundImage={bk?.imageLinks?.thumbnail}
                     title={bk?.title}
                     authors={bk?.authors.join()}
@@ -30,8 +37,12 @@ const BookListContent = ({
           <div className="bookshelf-books">
             <ol className="books-grid">
               {book_records_want.map((bk, index) => (
-                <li key={`currently-${index}`}>
+                <li key={`want-${index}`}>
                   <Book
+                    shelf={SHELF.WANT}
+                    handleShelfUpdate={(newShelf) => {
+                      handleShelfUpdate(bk, newShelf);
+                    }}
                     backgroundImage={bk?.imageLinks?.thumbnail}
                     title={bk?.title}
                     authors={bk?.authors.join()}
@@ -46,8 +57,12 @@ const BookListContent = ({
           <div className="bookshelf-books">
             <ol className="books-grid">
               {book_records_read.map((bk, index) => (
-                <li key={`currently-${index}`}>
+                <li key={`read-${index}`}>
                   <Book
+                    shelf={SHELF.READ}
+                    handleShelfUpdate={(newShelf) => {
+                      handleShelfUpdate(bk, newShelf);
+                    }}
                     backgroundImage={bk?.imageLinks?.thumbnail}
                     title={bk?.title}
                     authors={bk?.authors.join()}

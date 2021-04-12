@@ -23,19 +23,7 @@ class BooksApp extends React.Component {
   //#endregion
 
   //#region helper functions
-  // handleBookRecords = (record, update = false) => {
-  //   if (update) {
-  //     this.setState((state) => ({
-  //       book_records: [
-  //         ...state.book_records.filter((book) => book.id !== record.id),
-  //         record,
-  //       ],
-  //     }));
-  //   } else {
-  //     this.setState(() => ({ book_records: record }));
-  //   }
-  // };
-  handleBookRecords = (records) => {
+  setBookRecords = (records) => {
     const currently = [];
     const want = [];
     const read = [];
@@ -59,15 +47,17 @@ class BooksApp extends React.Component {
     this.setState(() => ({ book_records_currently: currently }));
     this.setState(() => ({ book_records_want: want }));
     this.setState(() => ({ book_records_read: read }));
-
-    debugger;
   };
 
-  handleShelfUpdate = (book, shelf) => {
-    book.shelf = shelf;
-    BooksAPI.update(book, shelf).then((response) => {
-      this.handleBookRecords(book, true);
-    });
+  handleShelfUpdate = async (book, newShelf) => {
+    book.shelf = newShelf;
+    const response = await BooksAPI.update(book, newShelf);
+    if (response) {
+      const results = await BooksAPI.getAll();
+      if (results) {
+        this.setBookRecords(results);
+      }
+    }
   };
 
   filterShelfBooks = (shelf) => {
@@ -79,7 +69,7 @@ class BooksApp extends React.Component {
   componentDidMount() {
     BooksAPI.getAll().then((results) => {
       console.log({ results });
-      this.handleBookRecords(results);
+      this.setBookRecords(results);
     });
   }
   //#endregion
@@ -97,7 +87,7 @@ class BooksApp extends React.Component {
                 return (
                   <BookList
                     // filterShelfBooks={this.filterShelfBooks}
-                    // handleShelfUpdate={this.handleShelfUpdate}
+                    handleShelfUpdate={this.handleShelfUpdate}
                     book_records_currently={this.state.book_records_currently}
                     book_records_want={this.state.book_records_want}
                     book_records_read={this.state.book_records_read}

@@ -3,6 +3,7 @@ import BookListContent from "../bookListContent/BookListContent";
 import { Link } from "react-router-dom";
 
 const BookList = ({
+  handleShelfUpdate,
   book_records_currently,
   book_records_want,
   book_records_read,
@@ -13,6 +14,7 @@ const BookList = ({
         <h1>MyReads</h1>
       </div>
       <BookListContent
+        handleShelfUpdate={handleShelfUpdate}
         book_records_currently={book_records_currently}
         book_records_want={book_records_want}
         book_records_read={book_records_read}
